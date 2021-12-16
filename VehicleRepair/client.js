@@ -4,6 +4,9 @@ function notify(message){ // notify function, creates a little message above the
     EndTextCommandThefeedPostTicker(true, true);
 }
 
+emit('chat:addSuggestion', '/repair', 'Restores vehicle to maximum health and perfect condition if close to a mechanic shop.');
+emit('chat:addSuggestion', '/fix', 'Restores vehicle to maximum health and perfect condition if close to a mechanic shop.');
+
 const mechanicShopLocations = { // some example locations
     sandygas: {
         x: 2005,
@@ -21,6 +24,14 @@ const mechanicShopLocations = { // some example locations
 
 let fixed = false; // initial value, vehicle is/has not been repaired
 RegisterCommand('repair', () => {
+    fixVehicle();
+})
+
+RegisterCommand('fix', () => {
+    fixVehicle();
+})
+
+function fixVehicle(){
     const ped = GetPlayerPed(-1); // player ped
     const pedL = GetEntityCoords(ped); // ped location
     const veh = GetVehiclePedIsIn(ped); // ped/player vehicle
@@ -38,4 +49,4 @@ RegisterCommand('repair', () => {
         notify('Too far away from a mechanic shop to repair!');
     }
     fixed = false; // reset fixed var
-})
+}
